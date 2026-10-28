@@ -1,0 +1,14 @@
+# 构建上下文忽略项
+# 注意：scripts/ 与 public/ 必须保留（pnpm build 的 prepare:ffmpeg-core 依赖它们）
+node_modules
+dist
+.git
+.gitignore
+*.log
+*.zip
+.idea
+.vscode
+docs
+tests
+README.md
+LICENSE

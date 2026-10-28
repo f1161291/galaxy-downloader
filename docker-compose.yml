@@ -1,0 +1,16 @@
+services:
+  galaxy-downloader:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: galaxy-downloader:latest
+    container_name: galaxy-downloader
+    ports:
+      - "3010:3010"
+    restart: unless-stopped
+    environment:
+      # 如接公共下载 API，可在此覆盖；本地默认无需配置
+      # NEXT_PUBLIC_API_BASE_URL: https://downloader-api.example.com
+      # NEXT_PUBLIC_SITE_URL: http://localhost:3010
+      # SEO_INDEXABLE: "false"
+      PORT: "3010"

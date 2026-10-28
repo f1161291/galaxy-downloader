@@ -1,0 +1,1048 @@
+{
+  "versions": [
+    {
+      "version": "6.3.0",
+      "date": "2026-10-27",
+      "changes": {
+        "zh": [
+          "新增桌面端下载中心，集中展示 Windows、macOS 和 Linux 安装包及安装说明",
+          "优化桌面端版本信息加载，减少进入下载页后的等待",
+          "新增今日及累计解析次数展示",
+          "优化支持平台列表，增加平台品牌图标",
+          "修复播客音频分享及部分多语言显示问题",
+          "修复部分 Bilibili 封面加载问题，优化限额与上游限制的错误提示"
+        ],
+        "en": [
+          "Added a desktop download center with Windows, macOS, and Linux installers and installation instructions",
+          "Improved desktop release information loading to reduce waiting when opening the download page",
+          "Added today's and all-time parse counts",
+          "Improved the supported platforms list with platform brand icons",
+          "Fixed podcast audio sharing and some localization issues",
+          "Fixed loading issues with some Bilibili covers and clarified error messages for quotas and upstream restrictions"
+        ],
+        "ja": [
+          "Windows、macOS、Linux のインストーラーとインストール手順をまとめたデスクトップ版ダウンロードセンターを追加しました",
+          "デスクトップ版のリリース情報の読み込みを改善し、ダウンロードページを開いた際の待ち時間を短縮しました",
+          "本日および累計の解析回数の表示を追加しました",
+          "対応プラットフォーム一覧を改善し、各プラットフォームのブランドアイコンを追加しました",
+          "ポッドキャスト音声の共有と一部の多言語表示の問題を修正しました",
+          "一部の Bilibili カバー画像の読み込みを修正し、利用上限と接続先サービスの制限に関するエラー表示を改善しました"
+        ],
+        "zh-tw": [
+          "新增桌面版下載中心，集中顯示 Windows、macOS 和 Linux 安裝包及安裝說明",
+          "最佳化桌面版版本資訊載入，減少進入下載頁後的等待",
+          "新增今日及累計解析次數顯示",
+          "最佳化支援平台清單，新增平台品牌圖示",
+          "修復 Podcast 音訊分享及部分多語言顯示問題",
+          "修復部分 Bilibili 封面載入問題，改善額度與上游限制的錯誤提示"
+        ],
+        "es": [
+          "Se añadió un centro de descargas de escritorio con instaladores para Windows, macOS y Linux e instrucciones de instalación",
+          "Se mejoró la carga de información de versiones de escritorio para reducir la espera al abrir la página de descargas",
+          "Se añadieron los contadores de análisis de hoy y acumulados",
+          "Se mejoró la lista de plataformas compatibles con iconos de marca",
+          "Se corrigieron problemas al compartir audio de podcasts y algunos problemas de localización",
+          "Se corrigió la carga de algunas portadas de Bilibili y se aclararon los mensajes de error sobre cuotas y restricciones de los servicios de origen"
+        ],
+        "ru": [
+          "Добавлен центр загрузки настольного приложения с установщиками для Windows, macOS и Linux и инструкциями по установке",
+          "Улучшена загрузка информации о версиях настольного приложения, чтобы сократить ожидание при открытии страницы загрузки",
+          "Добавлены счётчики разборов за сегодня и за всё время",
+          "Улучшен список поддерживаемых платформ и добавлены их фирменные значки",
+          "Исправлены проблемы с отправкой ссылок на аудио подкастов и некоторые ошибки локализации",
+          "Исправлена загрузка некоторых обложек Bilibili и уточнены сообщения об исчерпании квот и ограничениях сервисов-источников"
+        ]
+      }
+    },
+    {
+      "version": "6.2.0",
+      "date": "2026-08-12",
+      "changes": {
+        "zh": [
+          "HLS 浏览器下载改为通过 Cloudflare Worker 代理，解决 Rutube 等平台的跨域播放列表和分片限制",
+          "下载窗口改为点击后开始，关闭窗口会停止正在进行的 HLS 下载",
+          "支持平台目录现完整展示 API 已注册的 34 个平台"
+        ],
+        "en": [
+          "Browser HLS downloads now use a Cloudflare Worker proxy for cross-origin playlists and segments on platforms such as Rutube",
+          "Downloads begin after an explicit click, and closing the dialog stops the active HLS download",
+          "The Platforms directory now lists all 34 platforms registered by the API"
+        ],
+        "ja": [
+          "ブラウザの HLS ダウンロードは Cloudflare Worker プロキシを経由し、Rutube などのクロスオリジンのプレイリストとセグメントに対応しました",
+          "ダウンロードはクリック後に開始され、ダイアログを閉じると進行中の HLS ダウンロードを停止します",
+          "対応プラットフォーム一覧に API 登録済みの 34 プラットフォームをすべて表示します"
+        ],
+        "zh-tw": [
+          "瀏覽器 HLS 下載改由 Cloudflare Worker Proxy 處理，解決 Rutube 等平台的跨網域播放清單與分片限制",
+          "下載會在點擊後開始，關閉視窗會停止進行中的 HLS 下載",
+          "支援平台目錄現完整列出 API 已註冊的 34 個平台"
+        ],
+        "es": [
+          "Las descargas HLS en el navegador ahora usan un proxy de Cloudflare Worker para listas y segmentos entre orígenes en plataformas como Rutube",
+          "Las descargas comienzan tras un clic explícito y cerrar el cuadro detiene la descarga HLS activa",
+          "El directorio de plataformas ahora muestra las 34 plataformas registradas por la API"
+        ],
+        "ru": [
+          "Загрузки HLS в браузере теперь используют прокси Cloudflare Worker для кросс-доменных плейлистов и сегментов на платформах вроде Rutube",
+          "Загрузка начинается после явного нажатия, а закрытие окна останавливает активную HLS-загрузку",
+          "В каталоге платформ теперь показаны все 34 платформы, зарегистрированные в API"
+        ]
+      }
+    },
+    {
+      "version": "6.1.0",
+      "date": "2026-07-23",
+      "changes": {
+        "zh": [
+          "新增 Apple Podcasts 支持"
+        ],
+        "en": [
+          "Added Apple Podcasts support"
+        ],
+        "ja": [
+          "Apple Podcasts に対応しました"
+        ],
+        "zh-tw": [
+          "新增 Apple Podcasts 支援"
+        ],
+        "es": [
+          "Se agregó soporte para Apple Podcasts"
+        ],
+        "ru": [
+          "Добавлена поддержка Apple Podcasts"
+        ]
+      }
+    },
+    {
+      "version": "6.0.1",
+      "date": "2026-06-09",
+      "changes": {
+        "zh": [
+          "优化解析结果操作区按钮布局，播放与下载分行展示、按钮改为文字显示，并移除封面下载按钮"
+        ],
+        "en": [
+          "Refined the parse result action layout by separating playback and download into two rows, switching buttons to text labels, and removing the cover download button"
+        ],
+        "ja": [
+          "解析結果の操作エリアのボタン配置を見直し、再生とダウンロードを2行に分け、ボタンをテキスト表示に変更し、カバーのダウンロードボタンを削除しました"
+        ],
+        "zh-tw": [
+          "最佳化解析結果操作區按鈕布局，播放與下載分行顯示、按鈕改為文字顯示，並移除封面下載按鈕"
+        ],
+        "es": [
+          "Se refinó la disposición de acciones en los resultados separando reproducción y descarga en dos filas, cambiando los botones a texto y eliminando el botón de descarga de portada"
+        ],
+        "ru": [
+          "Улучшено расположение кнопок в области действий результатов: воспроизведение и загрузка разделены на две строки, кнопки переведены в текстовый вид, кнопка скачивания обложки удалена"
+        ]
+      }
+    },
+    {
+      "version": "6.0.0",
+      "date": "2026-05-10",
+      "changes": {
+        "zh": [
+          "新增通用视频网站的解析"
+        ],
+        "en": [
+          "Added support for parsing generic video sites"
+        ],
+        "ja": [
+          "一般的な動画サイトの解析に対応しました"
+        ],
+        "zh-tw": [
+          "新增通用影片網站的解析"
+        ],
+        "es": [
+          "Se agregó soporte para analizar sitios de video generales"
+        ],
+        "ru": [
+          "Добавлена поддержка разбора общих видеосайтов"
+        ]
+      }
+    },
+    {
+      "version": "5.1.0",
+      "date": "2026-05-08",
+      "changes": {
+        "zh": [
+          "解析结果卡支持直接在线播放预览，可先播放视频和音频",
+          "优化 Bilibili 合集切换体验，支持更快定位当前视频",
+          "优化移动端结果列表与按钮布局，深色模式下显示更一致",
+          "新增独立反馈页"
+        ],
+        "en": [
+          "Result cards now support inline playback previews so you can try videos and audio before downloading",
+          "Improved the Bilibili collection switching experience for faster navigation to the current video",
+          "Refined result list and button layouts on mobile with more consistent display in dark mode",
+          "Added a dedicated feedback page"
+        ],
+        "ja": [
+          "解析結果カードでインライン再生プレビューに対応し、動画と音声を先に試せるようになりました",
+          "Bilibili 合集の切り替え体験を改善し、現在の動画へより素早く移動できるようになりました",
+          "モバイルでの結果リストとボタン配置を見直し、ダークモードでも表示の一貫性を高めました",
+          "専用のフィードバックページを追加しました"
+        ],
+        "zh-tw": [
+          "解析結果卡支援直接線上播放預覽，可先試播影片和音訊",
+          "最佳化 Bilibili 合集切換體驗，支援更快定位目前影片",
+          "最佳化行動端結果列表與按鈕布局，深色模式下顯示更一致",
+          "新增獨立反饋頁"
+        ],
+        "es": [
+          "Las tarjetas de resultados ahora permiten vista previa de reproducción integrada para probar video y audio antes de descargar",
+          "Se mejoró la experiencia de cambio en colecciones de Bilibili para ubicar más rápido el video actual",
+          "Se ajustaron las listas de resultados y la disposición de botones en móviles con una visualización más consistente en modo oscuro",
+          "Se añadió una página de feedback dedicada"
+        ],
+        "ru": [
+          "Карточки результатов теперь поддерживают встроенный предпросмотр воспроизведения, чтобы можно было заранее проверить видео и аудио",
+          "Улучшено переключение в коллекциях Bilibili для более быстрого перехода к текущему видео",
+          "Доработаны списки результатов и расположение кнопок на мобильных устройствах, а также улучшена согласованность отображения в темной теме",
+          "Добавлена отдельная страница обратной связи"
+        ]
+      }
+    },
+    {
+      "version": "5.0.2",
+      "date": "2026-04-30",
+      "changes": {
+        "zh": [
+          "优化首页和反馈体验，界面更紧凑一致，反馈可附带浏览器和系统信息便于排查问题。"
+        ],
+        "en": [
+          "Improved the home and feedback experience with a more compact UI and browser/system details in feedback for troubleshooting."
+        ],
+        "ja": [
+          "ホームとフィードバック体験を改善し、よりコンパクトなUIと、問題調査に役立つブラウザ・システム情報の送信に対応しました。"
+        ],
+        "zh-tw": [
+          "優化首頁和反饋體驗，介面更緊湊一致，反饋可附帶瀏覽器和系統資訊便於排查問題。"
+        ],
+        "es": [
+          "Se mejoró la experiencia de inicio y feedback con una interfaz más compacta y datos del navegador y sistema para resolver problemas."
+        ],
+        "ru": [
+          "Улучшены главная страница и обратная связь: интерфейс стал компактнее, а отзывы могут включать данные браузера и системы для диагностики."
+        ]
+      }
+    },
+    {
+      "version": "5.0.1",
+      "date": "2026-04-29",
+      "changes": {
+        "zh": [
+          "优化了 Bilibili 多 P 视频解析结果的展示样式",
+          "优化下载历史和结果列表在小屏下的滚动与按钮布局"
+        ],
+        "en": [
+          "Improved the display style for Bilibili multi-part video parse results",
+          "Improved scrolling and button layout for download history and result lists on small screens"
+        ],
+        "ja": [
+          "Bilibili の複数パート動画の解析結果表示を改善しました",
+          "小さい画面でのダウンロード履歴と結果リストのスクロールおよびボタン配置を改善しました"
+        ],
+        "zh-tw": [
+          "最佳化了 Bilibili 多 P 影片解析結果的顯示樣式",
+          "最佳化下載歷史與結果列表在小螢幕下的捲動與按鈕布局"
+        ],
+        "es": [
+          "Se mejoró la presentación de los resultados de análisis de videos multiparte de Bilibili",
+          "Se mejoraron el desplazamiento y la disposición de botones del historial de descargas y las listas de resultados en pantallas pequeñas"
+        ],
+        "ru": [
+          "Улучшено отображение результатов разбора многочастных видео Bilibili",
+          "Улучшены прокрутка и расположение кнопок в истории загрузок и списках результатов на небольших экранах"
+        ]
+      }
+    },
+    {
+      "version": "5.0.0",
+      "date": "2026-04-28",
+      "changes": {
+        "zh": [
+          "首页新增悬浮回到顶部按钮",
+          "新增西班牙语与俄语界面支持",
+          "增加更多平台支持",
+          "站点品牌文案统一为 sparkdownloader"
+        ],
+        "en": [
+          "Added a floating back-to-top button",
+          "Introduced Spanish and Russian UI support",
+          "Expanded platform support",
+          "Unified site branding as sparkdownloader"
+        ],
+        "ja": [
+          "ホームページに「ページ上部へ戻る」フローティングボタンを追加しました",
+          "スペイン語・ロシア語UIに対応しました",
+          "対応プラットフォームを拡充しました",
+          "サイトブランド表記を sparkdownloader に統一しました"
+        ],
+        "zh-tw": [
+          "首頁新增懸浮回到頂部按鈕",
+          "新增西班牙語與俄語介面支援",
+          "增加更多平台支援",
+          "站點品牌文案統一為 sparkdownloader"
+        ],
+        "es": [
+          "Se añadió un botón flotante para volver arriba",
+          "Se añadió soporte de interfaz en español y ruso",
+          "Se amplió la compatibilidad con más plataformas",
+          "La marca del sitio se unificó como sparkdownloader"
+        ],
+        "ru": [
+          "Добавлена плавающая кнопка «Наверх»",
+          "Добавлена поддержка интерфейса на испанском и русском языках",
+          "Расширена поддержка платформ",
+          "Бренд сайта унифицирован как sparkdownloader"
+        ]
+      }
+    },
+    {
+      "version": "4.1.1",
+      "date": "2026-04-27",
+      "changes": {
+        "zh": [
+          "Bilibili 合集视频列表新增每条音频下载按钮",
+          "修复移动端下载音频时文件格式名错误的问题"
+        ],
+        "en": [
+          "Added per-item audio download buttons to Bilibili season video lists",
+          "Fixed incorrect audio filename extension when downloading on mobile"
+        ],
+        "ja": [
+          "Bilibili 合集動画リストで各項目の音声ダウンロードボタンを追加しました",
+          "モバイルで音声をダウンロードする際にファイル拡張子が誤っていた問題を修正しました"
+        ],
+        "zh-tw": [
+          "Bilibili 合集影片列表新增每條音訊下載按鈕",
+          "修復行動端下載音訊時檔案格式名稱錯誤的問題"
+        ],
+        "es": [
+          "Se agregaron botones de descarga de audio por elemento a las listas de videos de colecciones de Bilibili.",
+          "Se corrigió la extensión incorrecta del archivo de audio al descargar en dispositivos móviles."
+        ],
+        "ru": [
+          "В списки серийных видео Bilibili добавлены кнопки загрузки аудио для каждой серии.",
+          "Исправлена проблема с неверным расширением файла при скачивании аудио на мобильных устройствах."
+        ]
+      }
+    },
+    {
+      "version": "4.1.0",
+      "date": "2026-04-07",
+      "changes": {
+        "zh": [
+          "新增独立分享播放页，支持通过链接直接进入播放",
+          "结果卡新增分享播放入口，并优化移动端按钮展示",
+          "顶部栏支持首页快捷入口，历史记录入口改为图标加文字"
+        ],
+        "en": [
+          "Added a dedicated shared playback page so users can open and play directly from a share link",
+          "Added a share-to-play action in result cards and improved mobile button presentation",
+          "Enhanced the top bar with a home shortcut and updated history shortcut to icon-plus-label style"
+        ],
+        "ja": [
+          "共有リンクから直接再生できる専用の共有再生ページを追加しました",
+          "結果カードに共有再生アクションを追加し、モバイルでのボタン表示を改善しました",
+          "上部バーにホームショートカットを追加し、履歴ショートカットをアイコン＋ラベル表示に統一しました"
+        ],
+        "zh-tw": [
+          "新增獨立分享播放頁，可透過連結直接進入播放",
+          "結果卡新增分享播放入口，並優化行動端按鈕呈現",
+          "頂欄支援首頁快捷入口，歷史記錄入口改為圖示加文字"
+        ],
+        "es": [
+          "Se agregó una página de reproducción compartida independiente para que los usuarios puedan abrir y reproducir directamente desde un enlace.",
+          "Se agregó una acción de compartir para reproducir en las tarjetas de resultados y se mejoró la presentación de botones en móviles.",
+          "Se mejoró la barra superior con un acceso directo a la página de inicio y se actualizó el acceso directo del historial a un estilo de ícono y etiqueta."
+        ],
+        "ru": [
+          "Добавлена отдельная страница воспроизведения по ссылке для прямого доступа к просмотру.",
+          "В карточки результатов добавлена кнопка «Поделиться и воспроизвести», улучшено отображение кнопок на мобильных.",
+          "Верхняя панель теперь содержит быстрый доступ на главную страницу, а кнопка истории изменена на иконку с текстом."
+        ]
+      }
+    },
+    {
+      "version": "4.0.0",
+      "date": "2026-04-05",
+      "changes": {
+        "zh": [
+          "新增支持 Threads、微博、微信公众号文章等更多内容类型的解析与展示",
+          "重构支持平台展示区域，改为更紧凑的图标化布局，移动端浏览更清晰"
+        ],
+        "en": [
+          "Expanded parsing and display support for more content types across Threads, Weibo, and WeChat articles",
+          "Refined the supported-platform section with a denser icon-based layout for clearer mobile browsing"
+        ],
+        "ja": [
+          "Threads・Weibo・WeChat 記事など、より多くのコンテンツ形式の解析と表示に対応しました",
+          "対応プラットフォーム表示を、モバイルでも見やすいコンパクトなアイコン中心レイアウトに刷新しました"
+        ],
+        "zh-tw": [
+          "新增支援 Threads、微博、微信公眾號文章等更多內容類型的解析與顯示",
+          "重構支援平台展示區塊，改為更緊湊的圖示化布局，行動端瀏覽更清楚"
+        ],
+        "es": [
+          "Se amplió el soporte de análisis y visualización para más tipos de contenido de Threads, Weibo y artículos de WeChat.",
+          "Se rediseñó la sección de plataformas soportadas con un diseño más compacto basado en íconos para una navegación más clara en móviles."
+        ],
+        "ru": [
+          "Расширена поддержка разбора и отображения новых типов контента: Threads, Weibo и статьи WeChat.",
+          "Секция поддерживаемых платформ переработана в более компактный макет на основе иконок для удобного просмотра с мобильных устройств."
+        ]
+      }
+    },
+    {
+      "version": "3.3.0",
+      "date": "2026-04-03",
+      "changes": {
+        "zh": [
+          "新增 Telegram 公开视频消息支持",
+          "优化移动端顶部栏布局，左侧展示历史记录与处理工具，右侧展示反馈、语言和菜单"
+        ],
+        "en": [
+          "Added support for Telegram public video posts",
+          "Optimized the mobile top bar layout, with history and tools on the left and feedback, language, and menu on the right"
+        ],
+        "ja": [
+          "Telegram の公開動画メッセージに対応しました",
+          "モバイル上部バーのレイアウトを改善し、左側に履歴とツール、右側にフィードバック・言語・メニューを配置しました"
+        ],
+        "zh-tw": [
+          "新增 Telegram 公開影片訊息支援",
+          "最佳化行動端頂欄布局，左側顯示歷史記錄與處理工具，右側顯示回饋、語言與選單"
+        ],
+        "es": [
+          "Se agregó soporte para mensajes de video públicos de Telegram.",
+          "Se optimizó el diseño de la barra superior en móviles, con el historial y las herramientas a la izquierda, y comentarios, idioma y menú a la derecha."
+        ],
+        "ru": [
+          "Добавлена поддержка публичных видеосообщений из Telegram.",
+          "Оптимизирован макет верхней панели для мобильных экранов: слева история и инструменты, справа отзывы, язык и меню."
+        ]
+      }
+    },
+    {
+      "version": "3.2.1",
+      "date": "2026-04-02",
+      "changes": {
+        "zh": [
+          "优化首页引导文案，首屏说明更简洁",
+          "新增可点击示例链接，点击后可自动填入输入框"
+        ],
+        "en": [
+          "Refined the homepage guidance copy for a cleaner first-screen description",
+          "Added a clickable example link that can fill the input automatically"
+        ],
+        "ja": [
+          "トップページの案内文を見直し、ファーストビューの説明をより簡潔にしました",
+          "クリックで入力欄に自動入力できるサンプルリンクを追加しました"
+        ],
+        "zh-tw": [
+          "最佳化首頁引導文案，首屏說明更精簡",
+          "新增可點擊的示例連結，點擊後可自動填入輸入框"
+        ],
+        "es": [
+          "Se perfeccionó el texto de orientación en la página de inicio para una descripción más clara en la primera pantalla.",
+          "Se agregó un enlace de ejemplo en el que se puede hacer clic para completar automáticamente el campo de entrada."
+        ],
+        "ru": [
+          "Улучшен текст первого экрана на главной странице для большей лаконичности и понятности.",
+          "Добавлена кликабельная ссылка с примером, автоматически заполняющая поле ввода."
+        ]
+      }
+    },
+    {
+      "version": "3.2.0",
+      "date": "2026-04-02",
+      "changes": {
+        "zh": [
+          "增加“音频处理”功能，支持提取音频和合并音视频"
+        ],
+        "en": [
+          "Added the \"Audio Tools\" feature, supporting audio extraction and video-audio merging"
+        ],
+        "ja": [
+          "「音声処理」機能を追加し、音声抽出と動画・音声結合に対応しました"
+        ],
+        "zh-tw": [
+          "新增「音訊處理」功能，支援提取音訊與音影片合併"
+        ],
+        "es": [
+          "Se agregó la función \"Herramientas de audio\", que admite la extracción de audio y la fusión de video y audio."
+        ],
+        "ru": [
+          "Добавлена функция «Обработка звука» с поддержкой извлечения аудио и объединения видео со звуком."
+        ]
+      }
+    },
+    {
+      "version": "3.1.0",
+      "date": "2026-04-01",
+      "changes": {
+        "zh": [
+          "新增支持微信公众号文章视频解析与下载"
+        ],
+        "en": [
+          "Added support for WeChat article video parsing and download"
+        ],
+        "ja": [
+          "WeChat 記事内動画の解析とダウンロードに対応しました"
+        ],
+        "zh-tw": [
+          "新增支援微信公眾號文章影片解析與下載"
+        ],
+        "es": [
+          "Se agregó soporte para el análisis y descarga de videos de artículos de WeChat."
+        ],
+        "ru": [
+          "Добавлена поддержка парсинга и скачивания видео из статей WeChat."
+        ]
+      }
+    },
+    {
+      "version": "3.0.0",
+      "date": "2026-03-27",
+      "changes": {
+        "zh": [
+          "平台新增支持 Instagram 与 X",
+          "优化浏览器端音频提取器加载流程，减少初始化失败问题"
+        ],
+        "en": [
+          "Added platform support for Instagram and X",
+          "Improved the browser-side audio extractor loading flow to reduce initialization failures"
+        ],
+        "ja": [
+          "Instagram と X のサポートを追加しました",
+          "ブラウザ側の音声抽出機能の読み込みフローを改善し、初期化失敗を減らしました"
+        ],
+        "zh-tw": [
+          "平台新增支援 Instagram 與 X",
+          "最佳化瀏覽器端音訊提取器載入流程，降低初始化失敗問題"
+        ],
+        "es": [
+          "Se incorporó soporte para las plataformas Instagram y X.",
+          "Se mejoró el flujo de carga del extractor de audio en el navegador para reducir los fallos de inicialización."
+        ],
+        "ru": [
+          "Добавлена поддержка платформ Instagram и X (ранее Twitter).",
+          "Улучшен процесс загрузки экстрактора аудио в браузере, минимизировано количество ошибок инициализации."
+        ]
+      }
+    },
+    {
+      "version": "2.2.0",
+      "date": "2026-03-25",
+      "changes": {
+        "zh": [
+          "新增日语支持",
+          "无语言偏好时默认进入英语页面，同时保留浏览器自动判语言",
+          "顶栏新增主题切换，并优化顶栏间距与移动端语言显示",
+          "解析失败与反馈提交失败提示支持多语言本地化，错误信息更清晰"
+        ],
+        "en": [
+          "Added Japanese support",
+          "Users without a language preference now land on English by default while browser language detection remains enabled",
+          "Added theme switching to the top bar and refined header spacing plus mobile language display",
+          "Parse and feedback submission errors are now localized, making messages clearer"
+        ],
+        "ja": [
+          "日本語に対応しました",
+          "言語設定の希望がない場合は英語ページを既定にしつつ、ブラウザの言語判定は引き続き利用します",
+          "上部バーにテーマ切り替えを追加し、余白とモバイルでの言語表示を調整しました",
+          "解析失敗とフィードバック送信失敗の案内を多言語化し、エラーメッセージを分かりやすくしました"
+        ],
+        "zh-tw": [
+          "新增日文支援",
+          "無語言偏好時預設進入英文頁面，同時保留瀏覽器自動判斷語言",
+          "頂欄新增主題切換，並最佳化頂欄間距與行動端語言顯示",
+          "解析失敗與回饋提交失敗提示支援多語系在地化，錯誤訊息更清楚"
+        ],
+        "es": [
+          "Se añadió soporte para el idioma japonés.",
+          "Los usuarios sin preferencia de idioma ahora acceden a la página en inglés por defecto, mientras se mantiene la detección automática del navegador.",
+          "Se añadió el cambio de tema en la barra superior y se mejoró el espaciado, además de optimizar la visualización de idioma en móviles.",
+          "Los errores de análisis y de envío de comentarios ahora están localizados, haciendo los mensajes más claros."
+        ],
+        "ru": [
+          "Добавлена поддержка японского языка.",
+          "Теперь для пользователей без языковых настроек по умолчанию открывается английская версия, автоматическое определение языка в браузере сохранено.",
+          "В верхнюю панель добавлен переключатель тем, улучшены интервалы и отображение языков на мобильных устройствах.",
+          "Уведомления об ошибках парсинга и отправки отзывов теперь локализованы, сообщения стали более понятными."
+        ]
+      }
+    },
+    {
+      "version": "2.1.0",
+      "date": "2026-03-08",
+      "changes": {
+        "zh": [
+          "历史记录新增搜索功能，可按标题快速筛选",
+          "历史记录清空操作新增二次确认，并改为警示样式按钮，降低误触风险",
+          "优化“重新解析”提示逻辑，移除重复提示，交互更简洁",
+          "优化首页操作引导文案，明确“粘贴链接/口令 → 点击解析按钮 → 自动识别 → 选择下载”流程"
+        ],
+        "en": [
+          "Added search to history, allowing quick filtering by title",
+          "Added confirmation before clearing history and switched to a warning-style button to reduce accidental clicks",
+          "Optimized re-parse notifications by removing duplicate messages for cleaner interaction",
+          "Refined homepage guidance copy to clarify the flow: paste link/token -> click Parse -> auto detect -> choose download"
+        ],
+        "ja": [
+          "履歴に検索機能を追加し、タイトルですばやく絞り込めるようにしました",
+          "履歴の削除前に確認を追加し、誤操作を減らすため警告スタイルのボタンに変更しました",
+          "再解析通知の重複をなくし、操作をよりシンプルにしました",
+          "トップページの案内文を改善し、「リンク/トークンを貼り付け -> 解析をクリック -> 自動判別 -> ダウンロードを選択」の流れを明確にしました"
+        ],
+        "zh-tw": [
+          "歷史記錄新增搜尋功能，可依標題快速篩選",
+          "清空歷史操作新增二次確認，並改為警示樣式按鈕，降低誤觸風險",
+          "最佳化「重新解析」提示邏輯，移除重複提示，互動更簡潔",
+          "最佳化首頁操作引導文案，明確「貼上連結/口令 → 點擊解析按鈕 → 自動識別 → 選擇下載」流程"
+        ],
+        "es": [
+          "Se agregó búsqueda al historial, permitiendo un filtrado rápido por título.",
+          "Se añadió confirmación antes de borrar el historial y se cambió a un botón de estilo advertencia para reducir clics accidentales.",
+          "Se optimizaron las notificaciones de reanálisis eliminando los mensajes duplicados para una interacción más limpia.",
+          "Se perfeccionó el texto de guía de la página de inicio para aclarar el flujo: pegar enlace/código -> clic en Analizar -> detección automática -> elegir descarga."
+        ],
+        "ru": [
+          "В историю поиска добавлена функция фильтрации по названию для быстрого нахождения результатов.",
+          "Добавлено подтверждение при очистке истории, кнопка выполнена в виде предупреждения для предотвращения случайных нажатий.",
+          "Оптимизирована логика уведомлений о повторном парсинге, удалены дублирующиеся сообщения для более чистого взаимодействия.",
+          "Улучшено руководство на главной странице, уточнена последовательность: вставка ссылки -> Парсинг -> Автоопределение -> Выбор загрузки."
+        ]
+      }
+    },
+    {
+      "version": "2.0.0",
+      "date": "2026-03-05",
+      "changes": {
+        "zh": [
+          "新增支持 TikTok 视频与音频下载",
+          "新增支持 Bilibili TV 音频下载",
+          "移动端顶栏新增反馈按钮，快速入口更便捷",
+          "优化平台支持指南说明文案"
+        ],
+        "en": [
+          "Added support for TikTok video and audio download",
+          "Added support for Bilibili TV audio download",
+          "Added Feedback button to mobile top bar for quick access",
+          "Improved platform support guide descriptions"
+        ],
+        "ja": [
+          "TikTok の動画と音声ダウンロードに対応しました",
+          "Bilibili TV の音声ダウンロードに対応しました",
+          "モバイル上部バーにフィードバックボタンを追加しました",
+          "対応プラットフォーム案内の説明文を改善しました"
+        ],
+        "zh-tw": [
+          "新增支援 TikTok 影片與音訊下載",
+          "新增支援 Bilibili TV 音訊下載",
+          "行動端頂欄新增反饋按鈕，快速入口更便捷",
+          "最佳化平台支援指南說明文案"
+        ],
+        "es": [
+          "Se añadió soporte para la descarga de videos y audios de TikTok.",
+          "Se añadió soporte para la descarga de audio de Bilibili TV.",
+          "Se agregó el botón de Comentarios en la barra superior para móviles para un acceso rápido.",
+          "Se mejoraron las descripciones en la guía de plataformas soportadas."
+        ],
+        "ru": [
+          "Добавлена поддержка скачивания видео и аудио из TikTok.",
+          "Добавлена поддержка загрузки аудио из видео на Bilibili TV.",
+          "На мобильной версии в верхнюю панель добавлена кнопка обратной связи для быстрого доступа.",
+          "Улучшены описания в руководстве по поддерживаемым платформам."
+        ]
+      }
+    },
+    {
+      "version": "1.11.0",
+      "date": "2026-03-03",
+      "changes": {
+        "zh": [
+          "支持抖音图文帖展示与下载",
+          "支持视频封面显示和下载",
+          "优化三栏布局断点至 1024px，更多设备可见侧栏",
+          "移动端广告调整至解析结果下方，内容优先展示",
+          "修复口令解析后历史记录查看原视频链接无效的问题",
+          "优化界面文案与布局"
+        ],
+        "en": [
+          "Support Douyin image note display and download",
+          "Support video cover display and download",
+          "Optimized three-column layout breakpoint to 1024px for wider device support",
+          "Moved mobile ad below parse result, prioritizing content display",
+          "Fixed 'View Original' link broken in history when input was a share token",
+          "Improved UI copy and layout"
+        ],
+        "ja": [
+          "Douyin の画像ノート表示とダウンロードに対応しました",
+          "動画カバーの表示とダウンロードに対応しました",
+          "3カラムレイアウトのブレークポイントを 1024px に最適化し、より多くの端末でサイドバーを表示できるようにしました",
+          "モバイル広告を解析結果の下へ移動し、コンテンツ表示を優先しました",
+          "共有トークン入力時に履歴の「元リンクを表示」が無効になる問題を修正しました",
+          "UI 文言とレイアウトを改善しました"
+        ],
+        "zh-tw": [
+          "支援抖音圖文帖展示與下載",
+          "支援影片封面顯示與下載",
+          "最佳化三欄布局斷點至 1024px，更多裝置可見側欄",
+          "行動端廣告調整至解析結果下方，內容優先展示",
+          "修復使用口令解析後歷史記錄查看原影片連結失效的問題",
+          "優化介面文案與布局"
+        ],
+        "es": [
+          "Soporte para visualización y descarga de publicaciones de imágenes de Douyin.",
+          "Soporte para visualización y descarga de la portada del video.",
+          "Se optimizó el punto de interrupción del diseño de tres columnas a 1024 px para que la barra lateral sea visible en más dispositivos.",
+          "La publicidad en móviles se ajustó para que aparezca debajo de los resultados de análisis, priorizando el contenido.",
+          "Se corrigió un fallo donde el enlace en el historial al video original no funcionaba al ingresar un código de acceso.",
+          "Se mejoró el diseño y los textos de la interfaz."
+        ],
+        "ru": [
+          "Поддержка отображения и скачивания графических постов Douyin.",
+          "Поддержка отображения и скачивания обложек видео.",
+          "Оптимизирована ширина макета с тремя колонками до 1024px, боковая панель теперь видна на большем числе устройств.",
+          "Отображение рекламы на мобильных перемещено под результаты парсинга для приоритета контента.",
+          "Исправлена ошибка неработающей ссылки на исходное видео в истории после ввода токенов.",
+          "Улучшены тексты и макет интерфейса."
+        ]
+      }
+    },
+    {
+      "version": "1.10.0",
+      "date": "2026-02-23",
+      "changes": {
+        "zh": [
+          "优化广告展示逻辑，提升填充率和用户体验",
+          "精简平台支持指南，使界面更简洁清爽",
+          "广告位调整至侧栏底部，内容优先展示"
+        ],
+        "en": [
+          "Optimized ad display logic for better fill rate and user experience",
+          "Simplified platform support guide for cleaner interface",
+          "Moved ads to sidebar bottom, prioritizing content display"
+        ],
+        "ja": [
+          "広告表示ロジックを最適化し、表示率とユーザー体験を改善しました",
+          "対応プラットフォーム案内を簡潔にし、インターフェースをよりすっきりさせました",
+          "広告枠をサイドバー下部へ移動し、コンテンツ表示を優先しました"
+        ],
+        "zh-tw": [
+          "最佳化廣告顯示邏輯，提升填充率和使用者體驗",
+          "精簡平台支援指南，使介面更簡潔清爽",
+          "廣告位調整至側欄底部，內容優先展示"
+        ],
+        "es": [
+          "Se optimizó la lógica de visualización de anuncios para obtener una mejor tasa de relleno y experiencia de usuario.",
+          "Se simplificó la guía de plataformas para lograr una interfaz más limpia.",
+          "Se movieron los anuncios a la parte inferior de la barra lateral para priorizar el contenido."
+        ],
+        "ru": [
+          "Оптимизирована логика показа рекламы для лучшей заполняемости и удобства пользователей.",
+          "Руководство по платформам упрощено для большей чистоты интерфейса.",
+          "Рекламный блок перемещен в нижнюю часть боковой панели для фокуса на контенте."
+        ]
+      }
+    },
+    {
+      "version": "1.9.0",
+      "date": "2026-01-03",
+      "changes": {
+        "zh": [
+          "全面优化移动端界面布局"
+        ],
+        "en": [
+          "Comprehensive optimization of mobile interface layout"
+        ],
+        "ja": [
+          "モバイル画面レイアウトを全面的に最適化しました"
+        ],
+        "zh-tw": [
+          "全面最佳化行動端介面佈局"
+        ],
+        "es": [
+          "Optimización integral del diseño de la interfaz en plataformas móviles."
+        ],
+        "ru": [
+          "Комплексная оптимизация мобильного интерфейса."
+        ]
+      }
+    },
+    {
+      "version": "1.8.0",
+      "date": "2025-12-26",
+      "changes": {
+        "zh": [
+          "支持抖音口令解析，可直接粘贴分享口令",
+          "支持小红书口令解析，可直接粘贴分享口令"
+        ],
+        "en": [
+          "Support Douyin command parsing, paste share commands directly",
+          "Support Xiaohongshu command parsing, paste share commands directly"
+        ],
+        "ja": [
+          "Douyin の共有トークン解析に対応し、共有文をそのまま貼り付けられるようにしました",
+          "Xiaohongshu の共有トークン解析に対応し、共有文をそのまま貼り付けられるようにしました"
+        ],
+        "zh-tw": [
+          "支援抖音口令解析，可直接貼上分享口令",
+          "支援小紅書口令解析，可直接貼上分享口令"
+        ],
+        "es": [
+          "Soporte para el análisis de códigos compartidos de Douyin; pégalos directamente.",
+          "Soporte para el análisis de códigos compartidos de Xiaohongshu; pégalos directamente."
+        ],
+        "ru": [
+          "Поддержка обмена токенами Douyin: просто скопируйте и вставьте текст.",
+          "Поддержка токенов Xiaohongshu: просто скопируйте и вставьте текст."
+        ]
+      }
+    },
+    {
+      "version": "1.7.0",
+      "date": "2025-12-21",
+      "changes": {
+        "zh": [
+          "支持小红书视频音频提取"
+        ],
+        "en": [
+          "Support Xiaohongshu video audio extraction"
+        ],
+        "ja": [
+          "Xiaohongshu 動画の音声抽出に対応しました"
+        ],
+        "zh-tw": [
+          "支援小紅書影片音訊提取"
+        ],
+        "es": [
+          "Soporte para la extracción de video y audio de Xiaohongshu."
+        ],
+        "ru": [
+          "Поддержка извлечения видео и аудио из Xiaohongshu."
+        ]
+      }
+    },
+    {
+      "version": "1.6.0",
+      "date": "2025-12-21",
+      "changes": {
+        "zh": [
+          "支持抖音 /video/ 格式链接解析"
+        ],
+        "en": [
+          "Support Douyin /video/ URL format parsing"
+        ],
+        "ja": [
+          "Douyin の /video/ URL 形式の解析に対応しました"
+        ],
+        "zh-tw": [
+          "支援抖音 /video/ 格式連結解析"
+        ],
+        "es": [
+          "Soporte para el análisis de enlaces de Douyin en formato /video/."
+        ],
+        "ru": [
+          "Поддержка разбора ссылок Douyin в формате /video/."
+        ]
+      }
+    },
+    {
+      "version": "1.5.0",
+      "date": "2025-12-17",
+      "changes": {
+        "zh": [
+          "支持小红书图片预览",
+          "支持小红书图片打包下载"
+        ],
+        "en": [
+          "Support Xiaohongshu image preview",
+          "Support Xiaohongshu image package download"
+        ],
+        "ja": [
+          "Xiaohongshu 画像のプレビューに対応しました",
+          "Xiaohongshu 画像の一括ダウンロードに対応しました"
+        ],
+        "zh-tw": [
+          "支援小紅書圖片預覽",
+          "支援小紅書圖片打包下載"
+        ],
+        "es": [
+          "Soporte para vista previa de imágenes de Xiaohongshu.",
+          "Soporte para descargar paquetes de imágenes de Xiaohongshu."
+        ],
+        "ru": [
+          "Поддержка предварительного просмотра изображений Xiaohongshu.",
+          "Поддержка пакетного скачивания изображений из Xiaohongshu."
+        ]
+      }
+    },
+    {
+      "version": "1.4.0",
+      "date": "2025-12-16",
+      "changes": {
+        "zh": [
+          "支持小红书视频和图片下载"
+        ],
+        "en": [
+          "Support Xiaohongshu video and image download"
+        ],
+        "ja": [
+          "Xiaohongshu の動画と画像ダウンロードに対応しました"
+        ],
+        "zh-tw": [
+          "支援小紅書影片和圖片下載"
+        ],
+        "es": [
+          "Soporte para la descarga de videos e imágenes de Xiaohongshu."
+        ],
+        "ru": [
+          "Поддержка скачивания изображений и видео из Xiaohongshu."
+        ]
+      }
+    },
+    {
+      "version": "1.3.0",
+      "date": "2025-12-13",
+      "changes": {
+        "zh": [
+          "新增抖音视频音频提取功能（浏览器端转换）"
+        ],
+        "en": [
+          "Add Douyin video audio extraction (browser-side conversion)"
+        ],
+        "ja": [
+          "Douyin 動画の音声抽出機能を追加しました（ブラウザ側で変換）"
+        ],
+        "zh-tw": [
+          "新增抖音影片音訊提取功能（瀏覽器端轉換）"
+        ],
+        "es": [
+          "Se añadió la extracción de audio de videos de Douyin (conversión en el lado del navegador)."
+        ],
+        "ru": [
+          "Добавлено извлечение аудио из видео Douyin (локальная конвертация в браузере)."
+        ]
+      }
+    },
+    {
+      "version": "1.2.1",
+      "date": "2025-12-12",
+      "changes": {
+        "zh": [
+          "更换独立域名"
+        ],
+        "en": [
+          "Switch to independent domain"
+        ],
+        "ja": [
+          "独立ドメインへ切り替えました"
+        ],
+        "zh-tw": [
+          "更換獨立域名"
+        ],
+        "es": [
+          "Cambio a un dominio independiente."
+        ],
+        "ru": [
+          "Запуск на независимом домене."
+        ]
+      }
+    },
+    {
+      "version": "1.2.0",
+      "date": "2025-12-01",
+      "changes": {
+        "zh": [
+          "支持B站多P视频下载",
+          "显示视频时长"
+        ],
+        "en": [
+          "Support Bilibili multi-part video download",
+          "Display video duration"
+        ],
+        "ja": [
+          "Bilibili の複数パート動画ダウンロードに対応しました",
+          "動画の再生時間を表示するようにしました"
+        ],
+        "zh-tw": [
+          "支援B站多P影片下載",
+          "顯示影片時長"
+        ],
+        "es": [
+          "Soporte para descarga de videos de múltiples partes de Bilibili.",
+          "Mostrar la duración del video."
+        ],
+        "ru": [
+          "Поддержка скачивания многочастных видео на Bilibili.",
+          "Отображение продолжительности видео."
+        ]
+      }
+    },
+    {
+      "version": "1.1.0",
+      "date": "",
+      "changes": {
+        "zh": [
+          "新增抖音视频下载功能",
+          "自动识别视频平台"
+        ],
+        "en": [
+          "Add Douyin video download",
+          "Auto-detect video platform"
+        ],
+        "ja": [
+          "Douyin の動画ダウンロード機能を追加しました",
+          "動画プラットフォームの自動判別に対応しました"
+        ],
+        "zh-tw": [
+          "新增抖音影片下載功能",
+          "自動識別影片平台"
+        ],
+        "es": [
+          "Se añadió la función de descarga de videos de Douyin.",
+          "Detección automática de la plataforma de video."
+        ],
+        "ru": [
+          "Добавлено скачивание видео из Douyin.",
+          "Автоматическое определение платформы для видео."
+        ]
+      }
+    },
+    {
+      "version": "1.0.0",
+      "date": "",
+      "changes": {
+        "zh": [
+          "首次发布",
+          "支持B站视频音频下载"
+        ],
+        "en": [
+          "Initial release",
+          "Support Bilibili audio and video download"
+        ],
+        "ja": [
+          "初回リリース",
+          "Bilibili の音声・動画ダウンロードに対応"
+        ],
+        "zh-tw": [
+          "首次發佈",
+          "支援B站影片音訊下載"
+        ],
+        "es": [
+          "Lanzamiento inicial.",
+          "Soporte para la descarga de audio y video de Bilibili."
+        ],
+        "ru": [
+          "Первый релиз.",
+          "Поддержка скачивания аудио и видео с Bilibili."
+        ]
+      }
+    }
+  ]
+}

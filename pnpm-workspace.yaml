@@ -1,0 +1,16 @@
+packages:
+  - '.'
+
+# @types/react 和 @types/react-dom 必须全仓唯一，否则 React 19 的类型定义会互相打架。
+# pnpm 11 不再读 package.json 里的 pnpm.overrides，这里是唯一还生效的位置。
+overrides:
+  '@types/react': 19.2.14
+  '@types/react-dom': 19.2.3
+
+allowBuilds:
+  '@parcel/watcher': false
+  '@swc/core': true
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
+  workerd: true

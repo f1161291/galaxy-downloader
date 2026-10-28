@@ -1,0 +1,546 @@
+'use client';
+
+import { startTransition, useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
+import dynamic from 'next/dynamic';
+import { useSearchParams } from 'next/navigation';
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+
+import { toast } from '@/lib/deferred-toast';
+import { DeferredAudioExtractDialog } from '@/components/deferred-audio-extract-dialog';
+import { useTopBarActions } from '@/components/layout/top-bar-actions';
+import type { AudioExtractTask } from '@/components/audio-tool/types';
+import type { MediaPreviewRequest } from '@/components/downloader/media-preview';
+import { buildResultPreviewForSelection } from '@/components/downloader/media-preview';
+import { ArrowUp, Loader2, X } from 'lucide-react';
+
+import type { DownloadRecord } from './download-history';
+import { useLocalStorageState } from '@/hooks/use-local-storage-state';
+import { useInstallPrompt } from '@/hooks/use-install-prompt';
+import type { UnifiedParseResult } from '@/lib/types';
+import { Platform } from '@/lib/types';
+import { DOWNLOAD_HISTORY_MAX_COUNT, DOWNLOAD_HISTORY_STORAGE_KEY } from '@/lib/constants';
+import { useDictionary } from '@/i18n/client';
+import { isApiRequestError, resolveApiErrorMessage } from '@/lib/api-errors';
+import { getPlatformLabel, normalizePlatform } from '@/lib/platforms';
+import { UnifiedParseReloadError, requestUnifiedParse } from '@/lib/unified-parse';
+
+const UnifiedDownloaderLowerSections = dynamic(
+    () => import('./unified-downloader-lower-sections').then((m) => m.UnifiedDownloaderLowerSections),
+    { ssr: false }
+);
+
+interface UnifiedDownloaderProps {
+    leftRail?: ReactNode;
+    rightRail?: ReactNode;
+    mobileAd?: ReactNode;
+    mobileGuides?: ReactNode;
+    heroMeta?: ReactNode;
+    footer?: ReactNode;
+}
+
+interface ActivePreview extends MediaPreviewRequest {
+    origin: 'share' | 'result' | 'user';
+}
+
+export function UnifiedDownloader({
+    leftRail,
+    rightRail,
+    mobileAd,
+    mobileGuides,
+    heroMeta,
+    footer,
+}: UnifiedDownloaderProps) {
+    const dict = useDictionary()
+    const { setActions: setTopBarActions } = useTopBarActions()
+    const searchParams = useSearchParams();
+    const [url, setUrl] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [isCoolingDown, setIsCoolingDown] = useState(false);
+    const [error, setError] = useState('');
+    const lastParseTimeRef = useRef<number>(0);
+    const [audioToolMounted, setAudioToolMounted] = useState(false);
+    const [audioToolOpen, setAudioToolOpen] = useState(false);
+    const [audioToolEntry, setAudioToolEntry] = useState<'toolbar' | 'result'>('toolbar');
+    const [audioToolTask, setAudioToolTask] = useState<AudioExtractTask | null>(null);
+    const [parseResult, setParseResult] = useState<UnifiedParseResult['data'] | null>(null);
+    const [activePreview, setActivePreview] = useState<ActivePreview | null>(null);
+    const [showBackToTop, setShowBackToTop] = useState(false);
+    const historyRef = useRef<HTMLDivElement>(null);
+    const urlInputRef = useRef<HTMLTextAreaElement>(null);
+    const handledShareTaskRef = useRef<string | null>(null);
+
+    const [downloadHistory, setDownloadHistory, historyHydrated] = useLocalStorageState<DownloadRecord[]>(DOWNLOAD_HISTORY_STORAGE_KEY, {
+        defaultValue: []
+    });
+    const { canPrompt, promptInstall, dismiss } = useInstallPrompt();
+    const hasPromptedInstall = useRef(false);
+    const addToHistory = useCallback((record: DownloadRecord) => {
+        const normalizedUrl = record.url.trim();
+        setDownloadHistory(prev => [
+            record,
+            ...(prev || []).filter((item) => item.url.trim() !== normalizedUrl)
+        ].slice(0, DOWNLOAD_HISTORY_MAX_COUNT));
+    }, [setDownloadHistory]);
+
+    const clearDownloadHistory = () => {
+        setDownloadHistory([]);
+    };
+
+    const openToolbarAudioTool = useCallback(() => {
+        setAudioToolMounted(true);
+        setAudioToolEntry('toolbar');
+        setAudioToolTask(null);
+        setAudioToolOpen(true);
+    }, []);
+
+    const openResultAudioExtract = (task: AudioExtractTask) => {
+        setAudioToolMounted(true);
+        setAudioToolEntry('result');
+        setAudioToolTask(task);
+        setAudioToolOpen(true);
+    };
+
+    // 统一解析处理：只解析不自动下载
+    const handleUnifiedParse = useCallback(async (videoUrl: string) => {
+        void import('./unified-downloader-lower-sections');
+
+        // 调用解析接口获取视频信息
+        const apiResult = await requestUnifiedParse(videoUrl);
+        const normalizedData = {
+            ...apiResult.data,
+            platform: normalizePlatform(apiResult.data.platform),
+        };
+        const platformCode = normalizedData.platform;
+        const platformLabel = getPlatformLabel(platformCode, dict);
+
+        // 添加到下载历史 - 如果没有 title，使用 desc
+        // 使用 API 返回的规范 URL，避免口令等原始输入无法跳转
+        const displayTitle = normalizedData.title || normalizedData.desc || dict.history.unknownTitle;
+        const nextRecord: DownloadRecord = {
+            url: normalizedData.url || videoUrl,
+            title: displayTitle,
+            timestamp: Date.now(),
+            platform: platformCode as Platform
+        };
+
+        // Parse result card can be heavy on mobile. Mark as transition to keep interaction responsive.
+        startTransition(() => {
+            // 直接保存完整 parseResult.data，便于 ResultCard 渲染所有字段
+            setParseResult(normalizedData);
+            addToHistory(nextRecord);
+        });
+
+        // 显示成功提示
+        toast.success(dict.toast.douyinParseSuccess, {
+            description: `${platformLabel}: ${displayTitle}`,
+        });
+
+        // 首次解析成功后提示安装 PWA
+        if (canPrompt && !hasPromptedInstall.current) {
+            hasPromptedInstall.current = true;
+            toast(dict.toast.installTitle, {
+                description: dict.toast.installDescription,
+                duration: 10000,
+                action: {
+                    label: dict.toast.installAction,
+                    onClick: promptInstall,
+                },
+                onDismiss: dismiss,
+            });
+        }
+        return normalizedData;
+    }, [addToHistory, canPrompt, dict, dismiss, promptInstall]);
+
+    const closeParseResult = () => {
+        setParseResult(null);
+        setActivePreview(null);
+    };
+
+    const openResultPreview = useCallback((request: MediaPreviewRequest) => {
+        setActivePreview({
+            ...request,
+            autoplay: request.autoplay ?? false,
+            origin: request.origin ?? 'result',
+        });
+    }, []);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (!url.trim()) {
+            setError(dict.errors.emptyUrl);
+            return;
+        }
+
+        const now = Date.now();
+        if (now - lastParseTimeRef.current < 3000) {
+            return; // 冷却中禁止再次提交
+        }
+        lastParseTimeRef.current = now;
+        setIsCoolingDown(true);
+        setTimeout(() => setIsCoolingDown(false), 3000);
+
+        setLoading(true);
+        setError('');
+        setParseResult(null);
+        setActivePreview(null);
+
+        try {
+            // 使用统一接口处理所有平台，后端负责所有检测和处理
+            await handleUnifiedParse(url.trim());
+
+            setUrl('');
+        } catch (err) {
+            if (err instanceof UnifiedParseReloadError) {
+                setLoading(false);
+                return;
+            }
+
+            if (isApiRequestError(err)) {
+                console.error('Unified parse request failed', {
+                    code: err.code,
+                    status: err.status,
+                    requestId: err.requestId,
+                    details: err.details,
+                });
+            }
+
+            const errorMessage = resolveApiErrorMessage(err, dict);
+            setError(errorMessage);
+            toast.error(dict.errors.downloadFailed, {
+                description: errorMessage
+            });
+        }
+
+        setLoading(false);
+    };
+
+    const handleRedownload = (url: string) => {
+        setUrl(url);
+        setParseResult(null);
+        setActivePreview(null);
+        toast(dict.toast.linkFilledForRedownload, {
+            description: dict.toast.clickToRedownloadDesc,
+        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const sharedPlaySourceUrl = searchParams.get('play')?.trim() ?? '';
+    const sharedAutoplayRequested = searchParams.get('autoplay') === '1';
+    const sharedPlayItem = searchParams.get('item')?.trim() || undefined;
+    const sharedPlayType = searchParams.get('type') === 'audio'
+        ? 'audio'
+        : searchParams.get('type') === 'video'
+            ? 'video'
+            : undefined;
+    const hasDownloadHistory = downloadHistory.length > 0;
+    const showHistoryShortcut = historyHydrated && hasDownloadHistory;
+    const scrollToHistory = useCallback(() => {
+        if (historyRef.current) {
+            const top = historyRef.current.getBoundingClientRect().top + window.scrollY - 64;
+            window.scrollTo({ top, behavior: 'smooth' });
+        }
+    }, []);
+
+    useEffect(() => {
+        setTopBarActions({
+            showHistoryShortcut,
+            onHistoryClick: scrollToHistory,
+            showAudioTool: true,
+            onAudioToolClick: openToolbarAudioTool,
+        });
+
+        return () => {
+            setTopBarActions({});
+        };
+    }, [
+        openToolbarAudioTool,
+        scrollToHistory,
+        setTopBarActions,
+        showHistoryShortcut,
+    ]);
+
+    useEffect(() => {
+        if (!sharedPlaySourceUrl) {
+            return;
+        }
+
+        const taskKey = [
+            sharedPlaySourceUrl,
+            sharedPlayItem ?? '',
+            sharedPlayType ?? '',
+            sharedAutoplayRequested ? '1' : '0',
+        ].join('::');
+        if (handledShareTaskRef.current === taskKey) {
+            return;
+        }
+        handledShareTaskRef.current = taskKey;
+
+        let cancelled = false;
+
+        const runSharedPlayback = async () => {
+            setLoading(true);
+            setError('');
+            setParseResult(null);
+            setUrl(sharedPlaySourceUrl);
+            setActivePreview(null);
+
+            try {
+                const parsed = await handleUnifiedParse(sharedPlaySourceUrl);
+                if (cancelled) {
+                    return;
+                }
+
+                const sharePreview = buildResultPreviewForSelection(parsed, {
+                    item: sharedPlayItem,
+                    mediaType: sharedPlayType,
+                    autoplay: sharedAutoplayRequested,
+                });
+
+                setActivePreview(sharePreview ? {
+                    ...sharePreview,
+                    origin: 'share',
+                } : null);
+            } catch (err) {
+                if (cancelled) {
+                    return;
+                }
+
+                if (err instanceof UnifiedParseReloadError) {
+                    return;
+                }
+
+                if (isApiRequestError(err)) {
+                    console.error('Shared playback parse failed', {
+                        code: err.code,
+                        status: err.status,
+                        requestId: err.requestId,
+                        details: err.details,
+                    });
+                }
+
+                const errorMessage = resolveApiErrorMessage(err, dict);
+                setError(errorMessage);
+                toast.error(dict.errors.downloadFailed, {
+                    description: errorMessage,
+                });
+            } finally {
+                if (!cancelled) {
+                    setLoading(false);
+                }
+            }
+        };
+
+        void runSharedPlayback();
+
+        return () => {
+            cancelled = true;
+        };
+    }, [
+        dict,
+        handleUnifiedParse,
+        sharedAutoplayRequested,
+        sharedPlayItem,
+        sharedPlaySourceUrl,
+        sharedPlayType,
+    ]);
+
+    useEffect(() => {
+        let idleId: number | null = null;
+        let timerId: ReturnType<typeof setTimeout> | null = null;
+
+        const preloadInteractiveChunks = () => {
+            void import('./unified-downloader-lower-sections');
+        };
+
+        if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+            idleId = window.requestIdleCallback(() => {
+                preloadInteractiveChunks();
+            }, { timeout: 3000 });
+        } else {
+            timerId = setTimeout(() => {
+                preloadInteractiveChunks();
+            }, 1200);
+        }
+
+        return () => {
+            if (idleId !== null && 'cancelIdleCallback' in window) {
+                window.cancelIdleCallback(idleId);
+            }
+            if (timerId !== null) {
+                clearTimeout(timerId);
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        let ticking = false;
+
+        const updateVisibility = () => {
+            const shouldShow = window.scrollY > 800;
+            setShowBackToTop((prev) => (prev === shouldShow ? prev : shouldShow));
+            ticking = false;
+        };
+
+        const handleScroll = () => {
+            if (ticking) {
+                return;
+            }
+            ticking = true;
+            window.requestAnimationFrame(updateVisibility);
+        };
+
+        handleScroll();
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
+    return (
+        <div className="min-h-screen flex flex-col bg-background">
+            <DeferredAudioExtractDialog
+                mounted={audioToolMounted}
+                open={audioToolOpen}
+                onOpenChange={(nextOpen) => {
+                    setAudioToolOpen(nextOpen);
+                    if (!nextOpen) {
+                        setAudioToolTask(null);
+                        setAudioToolEntry('toolbar');
+                    }
+                }}
+                entry={audioToolEntry}
+                autoExtractTask={audioToolTask}
+            />
+
+            <main className="flex-1 p-3 sm:p-4 md:p-4 pt-4">
+                {/* PC端三栏布局，移动端垂直布局 */}
+                <div className="max-w-7xl mx-auto">
+                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+                        {/* 左栏：快速入门指南 (PC端显示，移动端隐藏) */}
+                        <div className="hidden lg:block">
+                            <div className="sticky top-20 flex flex-col gap-4">
+                                {leftRail}
+                            </div>
+                        </div>
+
+                        {/* 中栏：主要功能区域 */}
+                        <div className="lg:col-span-2 flex flex-col gap-4">
+                            <Card className="shrink-0">
+                                <CardHeader className="p-4 pb-2 space-y-1.5">
+                                    <h1 className="text-2xl text-center font-semibold tracking-tight">
+                                        {dict.unified.pageTitle}
+                                    </h1>
+                                    <p className="text-xs sm:text-[13px] leading-relaxed text-foreground/60 text-center break-words">
+                                        {dict.unified.pageDescription}
+                                    </p>
+                                </CardHeader>
+                                <CardContent className="px-4 pb-4 pt-1">
+                                    <form onSubmit={handleSubmit} className="space-y-4">
+                                        <div className="space-y-2">
+                                            <Textarea
+                                                id="url"
+                                                ref={urlInputRef}
+                                                value={url}
+                                                onChange={(e) => setUrl(e.target.value)}
+                                                placeholder={dict.unified.placeholder}
+                                                required
+                                                className="min-h-[120px] resize-none break-all"
+                                            />
+                                            <div className="flex gap-2">
+                                                <Button
+                                                    type="button"
+                                                    variant="outline"
+                                                    className="flex-1"
+                                                    onClick={async () => {
+                                                        try {
+                                                            const text = await navigator.clipboard.readText();
+                                                            setUrl(text);
+
+                                                            // 显示链接已粘贴提示
+                                                            toast.success(dict.toast.linkFilled);
+                                                        } catch (err) {
+                                                            console.error('Failed to read clipboard:', err);
+                                                            toast.error(dict.errors.clipboardFailed, {
+                                                                description: dict.errors.clipboardPermission,
+                                                            });
+                                                        }
+                                                    }}
+                                                >
+                                                    {dict.form.pasteButton}
+                                                </Button>
+                                                <Button
+                                                    type="submit"
+                                                    className="flex-1 flex items-center justify-center gap-2"
+                                                    disabled={loading || isCoolingDown || !url.trim()}
+                                                >
+                                                    {loading && <Loader2 className="h-4 w-4 animate-spin" />}
+                                                    {loading ? dict.form.downloading : dict.form.downloadButton}
+                                                </Button>
+                                            </div>
+                                        </div>
+
+                                        {error && (
+                                            <p className="text-sm text-destructive text-center">{error}</p>
+                                        )}
+
+                                        <div className="pt-2 space-y-3">
+                                            <div className="rounded-md border border-amber-500/20 bg-amber-500/10 px-3 py-2 text-center text-xs text-amber-600 dark:text-amber-400/90 break-words">
+                                                {dict.page.copyrightBilibiliRestriction}
+                                            </div>
+                                            {heroMeta}
+                                        </div>
+                                    </form>
+                                </CardContent>
+                            </Card>
+
+                            <UnifiedDownloaderLowerSections
+                                parseResult={parseResult}
+                                onCloseParseResult={closeParseResult}
+                                onOpenExtractAudio={openResultAudioExtract}
+                                onRequestPreview={openResultPreview}
+                                onClearPreview={() => setActivePreview(null)}
+                                activePreview={activePreview}
+                                mobileAd={mobileAd}
+                                mobileGuides={mobileGuides}
+                                downloadHistory={downloadHistory}
+                                clearHistory={clearDownloadHistory}
+                                onRedownload={handleRedownload}
+                                historyRef={historyRef}
+                                historyHydrated={historyHydrated}
+                            />
+                        </div>
+
+                        {/* 右栏：平台支持指南 (PC端显示，移动端隐藏) */}
+                        <div className="hidden lg:block">
+                            <div className="sticky top-20 flex flex-col gap-4">
+                                {rightRail}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            {footer}
+
+            <Button
+                type="button"
+                size="icon"
+                className={`fixed right-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-30 h-10 w-10 rounded-full shadow-md transition-all duration-300 ease-out ${
+                    showBackToTop
+                        ? 'pointer-events-auto opacity-100 translate-y-0 scale-100'
+                        : 'pointer-events-none opacity-0 translate-y-2 scale-95'
+                }`}
+                aria-label={dict.common.backToTop}
+                onClick={() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+            >
+                <ArrowUp className="h-4 w-4" />
+            </Button>
+        </div>
+    );
+}
